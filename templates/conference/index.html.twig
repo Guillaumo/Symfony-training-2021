@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Nos conférences
+{% endblock %}
+
+{% block header %}
+	<div class="container">
+		<div class="row">
+			<section class="col">
+				<img src="https://s2.qwant.com/thumbr/0x0/7/b/22597c2e0755884c634bd896431c00b6709406df357fad137e8c528e4582ef/Logo_Diginamic_Passeport-e1492187736114.png?u=http%3A%2F%2Fwww.diginamic.fr%2Fwp-content%2Fuploads%2F2018%2F01%2FLogo_Diginamic_Passeport-e1492187736114.png&q=0&b=1&p=0&a=0" alt="logo">Conférences Digiteam
+			</section>
+			<nav class="col">
+				<ul class="nav">
+					<li class="ml-0">
+						<a href="{{ path('homepage') }}">Accueil</a>
+					</li>
+					<li>
+						<a href="{{ path('admin') }}" class="btn mr-0 fa fa-user">
+							<i class="fa fa-home" aria-hidden="true"></i>
+						</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block body %}
+
+	<div class="container">
+		<h2 class="text-center">Donnez votre avis !</h2>
+		<section class="row">
+			{% for conference in conferences %}
+				<article
+					class="col">
+					{# <a href="/conference/{{ conference.id }}">View</a> #}
+					<img src="uploads/{{ conference.image }}" alt="image {{ conference.title }}">
+					<h4>{{ conference }}
+						le
+						{{conference.year|format_datetime('medium', 'short') }}</h4>
+					{# raw permet de traduire le html en texte #}
+					<p class="card-text">{{conference.description|raw}}</p>
+					<p class="card-text">Par
+						{{conference.speaker}}</p>
+					{# path() permet d'insérer une chemin relatif dynamique #}
+					<a href="{{ path('conference', { id: conference.id }) }}">Voir les commentaires</a>
+				</article>
+
+			{% endfor %}
+		</section>
+	</div>
+{% endblock %}

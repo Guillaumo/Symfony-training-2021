@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Conference Guestbook - {{ conference }}{% endblock %}
+
+{% block body %}
+    <h2>{{ conference }} Conference</h2>
+
+    {% if comments|length > 0 %}
+    <div>Il y a {{ comments|length }} commentaires.</div>
+        {% for comment in comments %}
+
+            <h4>{{ comment.author }}</h4>
+            <small>
+                {{ comment.createdAt|format_datetime('medium', 'short') }}
+            </small>
+
+            <p>{{ comment.text|raw }}</p>
+        {% endfor %}
+
+        {% if previous >= 0 %}
+            <a href="{{ path('conference', { id: conference.id, offset: previous }) }}" class="btn btn-sm btn-primary"><<</a>
+        {% endif %}
+        {% if next < comments|length %}
+            <a href="{{ path('conference', { id: conference.id, offset: next }) }}" class="btn btn-sm btn-primary">>></a>
+        {% endif %}
+
+    {% else %}
+        <div>No comments have been posted yet for this conference.</div>
+    {% endif %}
+
+    <div>
+        <a href="{{ path('conference_newcomment', { id: conference.id }) }}">Ajouter un commentaire</a>
+    </div>
+{% endblock %}
